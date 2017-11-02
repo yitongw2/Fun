@@ -1,11 +1,15 @@
 package com.example.yitongw2.fun;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.design.widget.BottomNavigationView;
 
 
 import com.google.android.gms.common.api.Status;
@@ -20,9 +24,9 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.location.places.Place;
 
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, PlaceSelectionListener,
-        GoogleMap.InfoWindowAdapter, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener
+        GoogleMap.InfoWindowAdapter, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener,
+        BottomNavigationView.OnNavigationItemSelectedListener
 {
 
     private GoogleMap mMap;
@@ -47,6 +51,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        BottomNavigationView mBtmView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        mBtmView.setOnNavigationItemSelectedListener(this);
     }
 
 
@@ -131,10 +138,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /************************ end GoogleMap.OnMarkerClickListener methods ***********************/
 
 
-    /************************ start GoogleMap.OnInfoWindowClickListener methods ***********************/
+    /************************ start GoogleMap.OnInfoWindowClickListener methods *******************/
     @Override
     public void onInfoWindowClick(Marker marker)
     {
         Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
     }
+    /************************ end GoogleMap.OnInfoWindowClickListener methods *******************/
+
+
+    /*************** start BottomNavigationView.OnNavigationItemSelectedListener methods **********/
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_explore:
+                // replace ExploreActivity with your Activity class
+                // below are transition: once user clicks on explore tab, it will kick off a new
+                // Intent that will start ExploreActivity
+                //
+                Intent explore = new Intent(this, ExploreActivity.class);
+                this.startActivity(explore);
+                break;
+            case R.id.menu_msg:
+                // replace MsgActivity with your Activity class
+                // below are transition: once user clicks on explore tab, it will kick off a new
+                // Intent that will start MsgActivity
+                //
+                // Intent msg = new Intent(MapsActivity.this, MsgActivity.class);
+                //startActivity(explore);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+    /*************** end BottomNavigationView.OnNavigationItemSelectedListener methods ************/
 }

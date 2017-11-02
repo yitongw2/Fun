@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Fun</string>
     <string name="title_activity_maps">Fun</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_explore">Explore</string>
+    <string name="menu_msg">Message</string>
 </resources>
